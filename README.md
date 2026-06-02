@@ -37,3 +37,24 @@ new Crosshair({
 
 ## How it works
 The cursor automatically tracks all `<a>`, `<button>` and elements with the `.interactable` class. It uses a `MutationObserver`, so it works perfectly with dynamic content and SPAs.
+
+# Add to any website
+You can run this in the console:
+
+```javascript
+(function() {
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/gh/CodCatDev/CrosshairJs@main/src/crosshair.js';
+    s.onload = () => {
+        if (typeof Crosshair !== 'undefined') {
+            new Crosshair();
+            console.log('CrosshairJs loaded');
+        } else {
+            console.error('Класс Crosshair не найден');
+        }
+    };
+    document.head.appendChild(s);
+})();
+```
+
+And then add CrosshairJs to any website (until the next page reload =D)
