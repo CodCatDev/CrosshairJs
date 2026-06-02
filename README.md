@@ -26,7 +26,8 @@ You can pass an options object to customize the look and feel:
 ```javascript
 new Crosshair({
     dotSize: 6, // cursor dot size
-    outlineSize: 30, // space between the dot and the outline
+    outlineSize: 2, // cursor outline width
+    outlineSpace: 30, // space between the dot and the outline
     dotColor: '#ff0000', // cursor dot color
     outlineColor: '#fff', // outline color
     useBlend: true, // mix-blend-mode: difference
