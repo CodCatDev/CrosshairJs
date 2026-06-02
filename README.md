@@ -1,6 +1,6 @@
 # CrosshairJS
 
-Lightweight (2KB) animated crosshair cursor with smart hover effects and zero setup.
+Lightweight (5KB) animated crosshair cursor with smart hover effects and zero setup.
 
 ## Features
 -  Zero Markup — style injection and DOM elements are handled automatically.
@@ -15,7 +15,7 @@ Just include the script before the closing `</body>` tag:
 ```html
 <script src="https://cdn.jsdelivr.net/gh/CodCatDev/CrosshairJs@main/src/crosshair.min.js"></script>
 <script>
-  new CustomCursor();
+  new Crosshair();
 </script>
 ```
 
@@ -24,7 +24,7 @@ Just include the script before the closing `</body>` tag:
 You can pass an options object to customize the look and feel:
 
 ```javascript
-new CustomCursor({
+new Crosshair({
     dotSize: 6, // cursor dot size
     outlineSize: 30, // space between the dot and the outline
     dotColor: '#ff0000', // cursor dot color
