@@ -1,14 +1,17 @@
-# CrosshairJS
+<div align="center">
+    <h1>Crosshair.JS</h1>
+    <img src="ast/crosshair.gif" alt="demo" width="450px">
+</div>
 
 Lightweight (5KB) animated crosshair cursor with smart hover effects and zero setup.
 
-## Features
+# Features
 -  Zero Markup — style injection and DOM elements are handled automatically.
 -  Magnetic Hover — automatically snaps and scales to links and buttons.
 -  Customizable — easy control over colors, sizes, and blend modes.
 -  Performance — smooth 60fps animation using RequestAnimationFrame.
 
-## Installation
+# Installation
 
 Just include the script before the closing `</body>` tag:
 
@@ -25,6 +28,7 @@ You can pass an options object to customize the look and feel:
 
 ```javascript
 new Crosshair({
+    style: 'corners', // 'corners' or 'full', preview in demo
     dotSize: 6, // cursor dot size
     outlineSize: 2, // cursor outline width
     outlineSpace: 30, // space between the dot and the outline
@@ -59,3 +63,21 @@ You can run this in the console:
 ```
 
 And then add CrosshairJs to any website (until the next page reload =D)
+
+# Demo
+
+[https://codcatdev.github.io/CrosshairJs/](https://codcatdev.github.io/CrosshairJs/)
+
+## Hover
+
+The cursor automatically snaps and scales to links and buttons.
+
+Full-Style:
+
+<img src="ast/crosshair-hover-full.gif" alt="demo" width="350px">
+
+---
+
+Corner-Style:
+
+<img src="ast/crosshair-hover-corners.gif" alt="demo" width="350px">

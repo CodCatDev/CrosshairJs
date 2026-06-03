@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrosshairJs Test</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #eee;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+        }
+        h1 { margin-bottom: 30px; }
+        button, a, input, textarea {
+            margin: 10px;
+            padding: 12px 24px;
+            background: #222;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            outline: none;
+        }
+        input, textarea {
+            background: #1a1a1a;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CrosshairJs v1.2.3</h1>
+        <p>Hover to see the magic</p>
+        
+        <a href="#">Link</a>
+        <button>Button</button>
+        <div class="interactable" style="padding: 20px; border: 2px dashed #555; margin-top: 20px;">
+            Custom block (.interactable)
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <input type="text" placeholder="type anything">
+            <br>
+            <textarea placeholder="Or type something here"></textarea>
+        </div>
+        <a href="full.html">FULL-Style cursor (see)</a>
+    </div>
+
+    <script src="src/crosshair.js"></script>
+    <script>
+        new Crosshair({
+            style: 'corners',
+            dotColor: '#ff3e00',
+            outlineColor: '#ff3e00'
+        });
+    </script>
+</body>
+</html>

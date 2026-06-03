@@ -1,8 +1,9 @@
 // lib made by CodCatDev
 // https://github.com/CodCatDev/CrosshairJs
-// Version 1.2.1
+// Version 1.2.3 
 class Crosshair {
     constructor(options = {}) {
+        this.stili = options.style || 'corners'
         this.dotSize = options.dotSize || 6
         this.outlineSpace = options.outlineSpace || 30
         this.dotColor = options.dotColor || '#fff'
@@ -26,40 +27,39 @@ class Crosshair {
                 background-color: ${this.dotColor} !important; border-radius: 50% !important; 
                 pointer-events: none !important; z-index: 10000 !important; 
                 transform: translate(-50%, -50%); display: block !important;
+                transition: opacity 0.2s ease;
             }
             .cursorOutline {
                 position: fixed; top: 0; left: 0; pointer-events: none !important; z-index: 9999 !important;
                 width: ${this.outlineSpace}px; height: ${this.outlineSpace}px;
                 display: flex !important; align-items: center !important; justify-content: center !important;
+                box-sizing: border-box !important;
                 ${this.useBlend ? 'mix-blend-mode: difference;' : ''}
+                ${this.stili === 'full' ? `border: ${this.outlineSize / 2}px solid ${this.outlineColor} !important;` : ''}
             }
             .cursorCorner {
                 position: absolute !important; width: 10px !important; height: 10px !important;
                 box-sizing: border-box !important; display: block !important;
+                transition: all 0.2s ease;
             }
             .top-left { 
                 top: 0; left: 0; 
-                border-top: ${this.outlineSize}px solid ${this.outlineColor} !important; 
-                border-left: ${this.outlineSize}px solid ${this.outlineColor} !important; 
+                ${this.stili === 'corners' || this.stili === 'full' ? `border-top: ${this.outlineSize}px solid ${this.outlineColor} !important; border-left: ${this.outlineSize}px solid ${this.outlineColor} !important;` : ''}
             }
             .top-right { 
                 top: 0; right: 0; 
-                border-top: ${this.outlineSize}px solid ${this.outlineColor} !important; 
-                border-right: ${this.outlineSize}px solid ${this.outlineColor} !important; 
+                ${this.stili === 'corners' || this.stili === 'full' ? `border-top: ${this.outlineSize}px solid ${this.outlineColor} !important; border-right: ${this.outlineSize}px solid ${this.outlineColor} !important;` : ''}
             }
             .bottom-left { 
                 bottom: 0; left: 0; 
-                border-bottom: ${this.outlineSize}px solid ${this.outlineColor} !important; 
-                border-left: ${this.outlineSize}px solid ${this.outlineColor} !important; 
+                ${this.stili === 'corners' || this.stili === 'full' ? `border-bottom: ${this.outlineSize}px solid ${this.outlineColor} !important; border-left: ${this.outlineSize}px solid ${this.outlineColor} !important;` : ''}
             }
             .bottom-right { 
                 bottom: 0; right: 0; 
-                border-bottom: ${this.outlineSize}px solid ${this.outlineColor} !important; 
-                border-right: ${this.outlineSize}px solid ${this.outlineColor} !important; 
+                ${this.stili === 'corners' || this.stili === 'full' ? `border-bottom: ${this.outlineSize}px solid ${this.outlineColor} !important; border-right: ${this.outlineSize}px solid ${this.outlineColor} !important;` : ''}
             }
             .cursorOutline:not(.hovering) .cursorCorner {
-                width: 8px !important; height: 8px !important;
-                transform: scale(0.8) !important;
+                ${this.stili === 'corners' ? 'width: 8px !important; height: 8px !important; transform: scale(0.8) !important;' : ''}
             }
         `
         document.head.appendChild(style)
@@ -97,6 +97,7 @@ class Crosshair {
         this.outlineY = this.mouseY
         this.rotation = 0
         this.isHovering = false
+        this.isTyping = false
         this.targetData = { x: 0, y: 0, w: 0, h: 0 }
     }
 
@@ -108,7 +109,7 @@ class Crosshair {
         })
 
         const updateInteractables = () => {
-            const items = document.querySelectorAll('a, button, .interactable')
+            const items = document.querySelectorAll('a, button, input, textarea, [contenteditable="true"], .interactable')
             items.forEach(el => {
                 if (el.dataset.cursorBound) return
                 el.dataset.cursorBound = "true"
@@ -127,6 +128,19 @@ class Crosshair {
                     this.isHovering = false
                     this.outline.classList.remove('hovering')
                 })
+                el.addEventListener('focus', () => {
+                    const isText = (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable)
+                    if (isText) {
+                        this.isTyping = true
+                        this.outline.classList.add('is-typing')
+                        this.dot.style.opacity = '1'
+                    }
+                })
+                el.addEventListener('blur', () => {
+                    this.isTyping = false
+                    this.outline.classList.remove('is-typing')
+                    this.dot.style.opacity = '1'
+                })
             })
         }
 
@@ -143,8 +157,11 @@ class Crosshair {
             let cw = parseFloat(this.outline.style.width) || this.outlineSpace
             let ch = parseFloat(this.outline.style.height) || this.outlineSpace
             
-            this.outline.style.width = `${cw + (this.targetData.w + this.hoverPadding.x - cw) * 0.15}px`
-            this.outline.style.height = `${ch + (this.targetData.h + this.hoverPadding.y - ch) * 0.15}px`
+            let targetW = this.targetData.w + this.hoverPadding.x
+            let targetH = this.targetData.h + this.hoverPadding.y
+
+            this.outline.style.width = `${cw + (targetW - cw) * 0.15}px`
+            this.outline.style.height = `${ch + (targetH - ch) * 0.15}px`
             
             let nearest180 = Math.round(this.rotation / 180) * 180
             this.rotation += (nearest180 - this.rotation) * 0.15
