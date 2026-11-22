@@ -128,19 +128,6 @@ class Crosshair {
                     this.isHovering = false
                     this.outline.classList.remove('hovering')
                 })
-                el.addEventListener('focus', () => {
-                    const isText = (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable)
-                    if (isText) {
-                        this.isTyping = true
-                        this.outline.classList.add('is-typing')
-                        this.dot.style.opacity = '1'
-                    }
-                })
-                el.addEventListener('blur', () => {
-                    this.isTyping = false
-                    this.outline.classList.remove('is-typing')
-                    this.dot.style.opacity = '1'
-                })
             })
         }
 
